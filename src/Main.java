@@ -534,7 +534,25 @@ public class Main {
         return socios;
     }
 
-    private static void salvarDados(List<Funcionario> funcionarios, List<Socio> socios) {
+    private static Niveis carregarNiveis(Niveis niveis) {
+        try {
+            FileInputStream fis = new FileInputStream("niveis.ser");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            niveis = (Niveis) ois.readObject();
+            ois.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo não encontrado, gerando novo arquivo de Niveis.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return niveis;
+    }
+
+    private static void salvarDados(List<Funcionario> funcionarios, List<Socio> socios, Niveis niveis) {
         try {
             FileOutputStream fos = new FileOutputStream("funcionarios.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -560,12 +578,25 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            FileOutputStream fos = new FileOutputStream("niveis.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(niveis);
+            oos.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
         List<Funcionario> funcionarios = carregarFuncionarios(new ArrayList<>());
         List<Socio> socios = carregarSocios(new ArrayList<>());
-        Niveis niveis = new Niveis(100, 200);
+        Niveis niveis = carregarNiveis(new Niveis(100, 200));
 
         String user = "admin";
         String password = "123";
@@ -584,6 +615,7 @@ public class Main {
                 ((Presidente) funcionarios.get(i)).getInfo();
             }
         }
-        salvarDados(funcionarios, socios);
+
+        salvarDados(funcionarios, socios, niveis);
     }
 }
