@@ -9,4 +9,8 @@ public class Medico extends Funcionario implements Serializable {
         this.cargo = "Médico";
         this.crm = crm;
     }
+
+    public String getCrm() {
+        return crm;
+    }
 }

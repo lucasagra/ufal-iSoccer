@@ -7,4 +7,5 @@ public class Cozinheiro extends Funcionario implements Serializable {
         super(nome, email, salario, cpf, telefone);
         this.cargo = "Cozinheiro";
     }
+
 }

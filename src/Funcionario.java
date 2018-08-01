@@ -15,6 +15,15 @@ public class Funcionario implements Serializable {
         this.telefone = telefone;
     }
 
+    public void getInfo(){
+        System.out.println("  Nome: " + this.nome);
+        System.out.println("  CPF: " + this.cpf);
+        System.out.println("  E-mail: " + this.email);
+        System.out.println("  Telefone: " + this.telefone);
+        System.out.println("  Salário: R$" + this.salario);
+        System.out.printf("%n");
+    }
+
     public String getNome(){return this.nome;}
     public String getEmail(){return this.email;}
     public int getSalario(){return this.salario;}

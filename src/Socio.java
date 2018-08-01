@@ -30,16 +30,25 @@ public class Socio implements Serializable {
     public String getNome(){return this.nome;}
     public String getSituacao(){return this.situacao;}
     public String getNivel(){return this.nivel;}
-
     public void setSituacao(String situacao){
         this.situacao = situacao;
     }
-
     public void setNivel(Niveis niveis){
         if(contribuicao > niveis.getElite()){
             this.nivel = "Elite";
         } else if(contribuicao > niveis.getSenior()) {
             this.nivel = "Senior";
         } else this.nivel = "Junior";
+    }
+
+    public void getInfo() {
+        System.out.println("  Nome: " + nome);
+        System.out.println("  CPF: " + cpf);
+        if(this.situacao.equals("Adimplente")) System.out.println("  Nivel: " + nivel);
+        System.out.println("  E-mail: " + email);
+        System.out.println("  Telefone: " + telefone);
+        System.out.println("  Endereço: " + endereco);
+        System.out.println("  Contribuição: R$" + contribuicao);
+        System.out.printf("%n");
     }
 }

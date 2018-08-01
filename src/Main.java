@@ -213,8 +213,9 @@ public class Main {
                     "%n5 - Atacante" +
                     "%n6 - Lateral esquerdo" +
                     "%n7 - Lateral direito" +
-                    "%n0 - Cancelar");
+                    "%n0 - Cancelar%n%n");
 
+            System.out.print("Selecione: ");
             tipo = input.nextLine();
         }
 
@@ -251,7 +252,8 @@ public class Main {
             salario = stringToInt(input.nextLine());
         }
 
-        System.out.printf("O jogador esta apto para jogar?%n1 - Sim%n0 - Não");
+        System.out.printf("O jogador esta apto para jogar?%n1 - Sim%n0 - Não%n%n");
+        System.out.print("Selecione: ");
         String option = input.nextLine();
         boolean apto = option.equals("1");
 
@@ -272,7 +274,7 @@ public class Main {
                     "%n6 - Cozinheiro" +
                     "%n7 - Advogado" +
                     "%n8 - Jogador" +
-                    "%n0 - Cancela%n");
+                    "%n0 - Cancela%n%n");
 
             System.out.print("Selecione: ");
             option = input.nextLine();
@@ -654,6 +656,226 @@ public class Main {
         }
     }
 
+    private static void gerarRelatorioFuncionarios(List<Funcionario> funcionarios) {
+
+        System.out.printf("%nInformações sobre o time:%n%n");
+        System.out.printf("Treinador:%n");
+        int j = 0;
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof Tecnico) {
+                funcionarios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+
+        j = 0;
+        System.out.printf("Jogadores aptos:%n");
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof Jogador) {
+                if(((Jogador) funcionarios.get(i)).isApto()){
+                    System.out.printf("  Posição: %s%n", ((Jogador) funcionarios.get(i)).getTipo());
+                    funcionarios.get(i).getInfo();
+                    j++;
+                }
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+
+        j = 0;
+        System.out.printf("Jogadores não-aptos:%n");
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof Jogador) {
+                if(!((Jogador) funcionarios.get(i)).isApto()){
+                    System.out.printf("  Posição: %s%n", ((Jogador) funcionarios.get(i)).getTipo());
+                    funcionarios.get(i).getInfo();
+                    j++;
+                }
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+
+        System.out.printf("%nInformações sobre serviços gerais:%n%n");
+        j = 0;
+        System.out.printf("Presidente:%n");
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof Presidente) {
+                funcionarios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+
+        j = 0;
+        System.out.printf("Médicos:%n");
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof Medico) {
+                System.out.printf("  CRM: %s%n", ((Medico) funcionarios.get(i)).getCrm());
+                funcionarios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+
+        j = 0;
+        System.out.printf("Cozinheiros:%n");
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof Cozinheiro) {
+                funcionarios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+
+        j = 0;
+        System.out.printf("Advogados:%n");
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof Advogado) {
+                funcionarios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+
+        j = 0;
+        System.out.printf("Motoristas:%n");
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof Motorista) {
+                System.out.printf("  Habilitação: %s%n", ((Motorista) funcionarios.get(i)).getHabilitacao());
+                funcionarios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+
+        j = 0;
+        System.out.printf("Preparadores físicos:%n");
+        for(int i = 0; i < funcionarios.size();i++){
+            if (funcionarios.get(i) instanceof PrepFisico) {
+                funcionarios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("  Não há dados%n%n");
+        }
+    }
+
+    private static void gerarRelatorioRecursos(List<Onibus> onibus, Estadio estadio, CT centro_treinamento){
+
+        System.out.printf("%nTransporte:%n");
+
+        if(onibus.size() <= 0){
+            System.out.printf("Nenhum cadastro disponível%n%n");
+        } else {
+            for(int i = 0; i < onibus.size(); i++) {
+                System.out.printf("  Onibus %d - ", onibus.get(i).getId());
+                if(onibus.get(i).isDisponivel()) System.out.printf("Disponível");
+                else System.out.printf("Não disponível");
+                System.out.printf("%n  Assentos: %d%n%n", onibus.get(i).getNum_lugares());
+            }
+        }
+        System.out.printf("%nInformações sobre o centro de treinamento:%n");
+        if(!centro_treinamento.isDisponivel()){
+            System.out.printf("  Não há centro de treinamento disponível%n%n");
+        } else {
+            System.out.printf("  Número de dormitórios: %d%n%n", centro_treinamento.getDormitorios());
+        }
+
+        System.out.printf("%nInformações sobre o estádio:%n");
+        if(!estadio.isDisponivel()){
+            System.out.printf("  Não há estádio disponível%n%n");
+        } else {
+            System.out.printf("  Capacidade do estádio: %d pessoas%n" +
+                    "  Número de banheiros: %d%n" +
+                    "  Número de lanchonetes: %d%n%n", estadio.getCapacidade(), estadio.getBanheiros(), estadio.getLanchonetes());
+        }
+    }
+
+    private static void gerarRelatorioSocios(List<Socio> socios){
+
+        System.out.printf("%n%d Sócio(s)-torcedor(es) cadastrados%n", socios.size());
+        int adimplentes = 0;
+
+        for(int i = 0;i < socios.size();i++)
+            if(socios.get(i).getSituacao().equals("Adimplente")) adimplentes++;
+
+        System.out.printf("%d Sócio(s) adimplente(s)%n%d Sócio(s) inadimplente(s)%n%n", adimplentes, socios.size()-adimplentes);
+
+        System.out.printf("%nSócios adimplentes:%n");
+        int j = 0;
+        for(int i = 0; i < socios.size(); i++){
+            if(socios.get(i).getSituacao().equals("Adimplente")){
+                socios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("Não há sócios adimplentes%n%n");
+        }
+
+        j = 0;
+        System.out.printf("%nSócios inadimplentes:%n");
+        for(int i = 0; i < socios.size(); i++) {
+            if (socios.get(i).getSituacao().equals("Inadimplente")) {
+                socios.get(i).getInfo();
+                j++;
+            }
+        }
+        if(j == 0){
+            System.out.printf("Não há sócios inadimplentes%n%n");
+        }
+
+    }
+
+    private static void gerarRelatorios(List<Funcionario> funcionarios, List<Socio> socios, Niveis niveis, List<Onibus> onibus, Estadio estadio, CT centro_treinamento){
+        Scanner input = new Scanner(System.in);
+
+        System.out.printf("%nOpções de relatório:%n" +
+                "1 - Relatório dos funcionários%n" +
+                "2 - Relatório dos recursos físicos%n" +
+                "3 - Relatório dos sócios%n" +
+                "4 - Relatório geral%n" +
+                "0 - Cancela%n%n");
+
+        System.out.print("Selecione: ");
+        int opcao = stringToInt(input.nextLine());
+
+        if(opcao == 1) {
+            System.out.printf("%nRelatório dos funcionários%n%n");
+            gerarRelatorioFuncionarios(funcionarios);
+        } else if (opcao == 2) {
+            System.out.printf("%nRelatório dos recursos físicos%n");
+            gerarRelatorioRecursos(onibus, estadio, centro_treinamento);
+        } else if (opcao == 3) {
+            System.out.printf("%nRelatório do sócio-torcedor%n");
+            gerarRelatorioSocios(socios);
+        } else if (opcao == 4) {
+            System.out.printf("%nRelatório geral%n");
+            gerarRelatorioFuncionarios(funcionarios);
+            gerarRelatorioRecursos(onibus, estadio, centro_treinamento);
+            gerarRelatorioSocios(socios);
+        } else {
+            return;
+        }
+    }
+
     private static boolean loginPage(String admin_user, String admin_password, List<Funcionario> funcionarios, List<Socio> socios, Niveis niveis, List<Onibus> onibus, Estadio estadio, CT centro_treinamento){
         Scanner input = new Scanner(System.in);
         System.out.printf("Bem vindo ao iSoccer, gerenciador de time de futebol.%n%n");
@@ -686,7 +908,7 @@ public class Main {
         String option = "10";
 
         while(!option.equals("0")) {
-            System.out.printf("%n1 - Adicionar funcionario" +
+            System.out.printf("%n1 - Adicionar funcionário" +
                     "%n2 - Gerenciar sócio-torcedor" +
                     "%n3 - Gerenciar recursos físicos" +
                     "%n4 - Exibir relatórios" +
@@ -696,7 +918,7 @@ public class Main {
             option = input.nextLine();
 
             while (!option.equals("0") && !option.equals("1") && !option.equals("2") && !option.equals("3") && !option.equals("4")) {
-                System.out.printf("%n1 - Adicionar funcionario" +
+                System.out.printf("%n1 - Adicionar funcionário" +
                         "%n2 - Gerenciar sócio-torcedor" +
                         "%n3 - Gerenciar recursos físicos" +
                         "%n4 - Exibir relatórios" +
@@ -713,7 +935,7 @@ public class Main {
             } else if (option.equals("3")) {
                 gerenciarRecursos(onibus, estadio, centro_treinamento);
             } else if (option.equals("4")) {
-
+                gerarRelatorios(funcionarios, socios, niveis, onibus, estadio, centro_treinamento);
             }
         }
         return true;
@@ -923,15 +1145,6 @@ public class Main {
 
         while(exit){
             exit = loginPage(user, password, funcionarios, socios, niveis, onibus, estadio, centro_treinamento);
-        }
-
-        for(int i = 0; i < funcionarios.size(); i++){
-
-            if (funcionarios.get(i) instanceof Jogador){
-                ((Jogador) funcionarios.get(i)).getInfo();
-            } else if(funcionarios.get(i) instanceof Presidente) {
-                ((Presidente) funcionarios.get(i)).getInfo();
-            }
         }
 
         salvarDados(funcionarios, socios, niveis, estadio, centro_treinamento, onibus);

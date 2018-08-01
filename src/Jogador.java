@@ -12,15 +12,29 @@ public class Jogador extends Funcionario implements Serializable {
         this.apto = apto;
     }
 
-    public void getInfo(){
-        System.out.println(super.getNome());
-        System.out.println(super.getEmail());
-        System.out.println(super.getSalario());
-        System.out.println(super.getCpf());
-        System.out.println(super.getTel());
-        System.out.println(cargo);
-        System.out.println(tipo);
-        System.out.println(apto);
+
+
+    public String getCargo() {
+        return cargo;
     }
 
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public boolean isApto() {
+        return apto;
+    }
+
+    public void setApto(boolean apto) {
+        this.apto = apto;
+    }
 }

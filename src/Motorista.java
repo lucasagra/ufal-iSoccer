@@ -10,4 +10,7 @@ public class Motorista extends Funcionario implements Serializable {
         this.habilitacao = habilitacao;
     }
 
+    public String getHabilitacao(){
+        return this.habilitacao;
+    }
 }
