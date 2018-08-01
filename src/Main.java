@@ -433,7 +433,228 @@ public class Main {
         }
     }
 
-    private static boolean loginPage(String admin_user, String admin_password, List<Funcionario> funcionarios, List<Socio> socios, Niveis niveis){
+    private static void gerenciarOnibus(List<Onibus> onibus) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.printf("1 - Adicionar ônibus%n");
+        for(int i = 0; i < onibus.size(); i++) {
+            System.out.printf("%d - Onibus %d - %d lugares - ", i+2, onibus.get(i).getId(), onibus.get(i).getNum_lugares());
+            if(onibus.get(i).isDisponivel()) System.out.printf("Disponível%n");
+            else System.out.printf("Não disponível%n");
+        }
+
+        System.out.print("Selecione: ");
+        int option = stringToInt(input.nextLine());
+
+        if(option == 1) {
+            System.out.print("Digite o número de lugares do novo ônibus: ");
+            int lugares = stringToInt(input.nextLine());
+            if (lugares > 0) {
+                onibus.add(new Onibus(onibus.size()+1, lugares, true));
+                System.out.printf("Ônibus adicionado.%n%n");
+            }
+        } else if (option-2 >= 0 && option-2 < onibus.size()) {
+            System.out.printf("%nSelecionado: Ônibus %d%n", onibus.get(option-2).getId());
+            System.out.printf("Mudar situação do ônibus:%n1 - Disponível%n2 - Não disponível%n");
+            System.out.print("Selecione: ");
+            int choice = stringToInt(input.nextLine());
+            if(choice == 1) {
+                onibus.get(option-2).setDisponivel(true);
+                System.out.printf("Alteração feita com sucesso.%n%n");
+            } else if(choice == 2) {
+                onibus.get(option-2).setDisponivel(false);
+                System.out.printf("Alteração feita com sucesso.%n%n");
+            } else {
+                System.out.printf("Alteração cancelada.%n%n");
+            }
+        }
+    }
+
+    private static void gerenciarEstadio(Estadio estadio) {
+        Scanner input = new Scanner(System.in);
+
+        if(!estadio.isDisponivel()){
+            System.out.printf("%nEstádio não disponivel.%n%n1 - Adicionar estádio%n0 - Cancela%n%n");
+            System.out.print("Selecione: ");
+            int option = stringToInt(input.nextLine());
+            if(option == 1) {
+                System.out.print("Digite a capacidade de pessoas: ");
+                int capacidade = stringToInt(input.nextLine());
+                if (capacidade <= 0){
+                    System.out.println("Operação cancelada.%n%n");
+                    return;
+                }
+                System.out.print("Digite a quantidade de banheiros: ");
+                int banheiros = stringToInt(input.nextLine());
+                if (banheiros < 0){
+                    System.out.println("Operação cancelada.%n%n");
+                    return;
+                }
+                System.out.print("Digite a quantidade de lanchonetes: ");
+                int lanchonetes = stringToInt(input.nextLine());
+                if (lanchonetes < 0){
+                    System.out.println("Operação cancelada.%n%n");
+                    return;
+                }
+                estadio.setDisponivel(true);
+                estadio.setBanheiros(banheiros);
+                estadio.setCapacidade(capacidade);
+                estadio.setLanchonetes(lanchonetes);
+
+                System.out.printf("%nEstádio adicionado com sucesso.%n%n");
+            }
+        } else {
+            System.out.printf("%nInformações sobre o estádio:" +
+                    "%n1 - Alterar capacidade" +
+                    "%n2 - Alterar número de banheiros" +
+                    "%n3 - Alterar número de anchonetes" +
+                    "%n4 - Remover estádio" +
+                    "%n0 - Cancela%n%n");
+            System.out.print("Selecione: ");
+
+            int option = stringToInt(input.nextLine());
+            if(option == 1) {
+                System.out.print("Digite a nova capacidade: ");
+                int capacidade = stringToInt(input.nextLine());
+                if (capacidade <= 0){
+                    System.out.println("Operação cancelada.%n%n");
+                } else {
+                    estadio.setCapacidade(capacidade);
+                    System.out.printf("%nCapacidade alterada com sucesso.%n%n");
+                }
+            } else if(option == 2){
+                System.out.print("Digite a nova quantidade de banheiros: ");
+                int banheiros = stringToInt(input.nextLine());
+                if (banheiros < 0){
+                    System.out.println("Operação cancelada.%n%n");
+                } else {
+                    estadio.setBanheiros(banheiros);
+                    System.out.printf("%nNúmero de banheiros alterado com sucesso.%n%n");
+                }
+            } else if(option == 3){
+                System.out.print("Digite a nova quantidade de lanchonetes: ");
+                int lanchonetes = stringToInt(input.nextLine());
+                if (lanchonetes < 0){
+                    System.out.println("Operação cancelada.%n%n");
+                } else {
+                    estadio.setLanchonetes(lanchonetes);
+                    System.out.printf("%nNúmero de lanchonetes alterado com sucesso.%n%n");
+                }
+            } else if(option == 4){
+                System.out.printf("Deseja remover o estádio?%n1 - Sim%n");
+                System.out.print("Selecione: ");
+                option = stringToInt(input.nextLine());
+                if(option == 1){
+                    estadio.setDisponivel(false);
+                }
+                System.out.printf("%nEstádio removido com sucesso.%n%n");
+            } else {
+                return;
+            }
+        }
+    }
+
+    private static void gerenciarCT(CT centro_treinamento) {
+        Scanner input = new Scanner(System.in);
+
+        if(!centro_treinamento.isDisponivel()){
+            System.out.printf("%nCentro de treinamento não disponivel.%n%n1 - Adicionar centro de treinamento%n0 - Cancela%n%n");
+            System.out.print("Selecione: ");
+            int option = stringToInt(input.nextLine());
+            if(option == 1) {
+                System.out.print("Digite o número de dormitórios: ");
+                int dormitorios = stringToInt(input.nextLine());
+                if (dormitorios < 0){
+                    System.out.println("Operação cancelada.%n%n");
+                    return;
+                }
+
+                centro_treinamento.setDisponivel(true);
+                centro_treinamento.setDormitorios(dormitorios);
+
+                System.out.printf("%nCentro de treinamento adicionado com sucesso.%n%n");
+            }
+        } else {
+            System.out.printf("%nInformações sobre o Centro de treinamento:" +
+                    "%n1 - Alterar número de dormitórios" +
+                    "%n2 - Remover centro de treinamento" +
+                    "%n0 - Cancela%n%n");
+            System.out.print("Selecione: ");
+
+            int option = stringToInt(input.nextLine());
+            if(option == 1) {
+                System.out.print("Digite o novo número de dormitórios: ");
+                int dormitorios = stringToInt(input.nextLine());
+                if (dormitorios < 0){
+                    System.out.println("Operação cancelada.%n%n");
+                } else {
+                    centro_treinamento.setDormitorios(dormitorios);
+                    System.out.printf("%nNúmero de dormitorios alterado com sucesso.%n%n");
+                }
+            } else if(option == 2){
+                System.out.printf("Deseja remover o centro de treinamento?%n1 - Sim%n");
+                System.out.print("Selecione: ");
+                option = stringToInt(input.nextLine());
+                if(option == 1){
+                    centro_treinamento.setDisponivel(false);
+                }
+                System.out.printf("%nCentro de treinamento removido com sucesso.%n%n");
+            } else {
+                return;
+            }
+        }
+    }
+
+    private static void gerenciarRecursos(List<Onibus> onibus, Estadio estadio, CT centro_treinamento){
+        Scanner input = new Scanner(System.in);
+
+        int option = 1;
+        while (option != 0) {
+            System.out.println("Detalhes dos recursos do time:");
+            System.out.printf("%n1 - Onibus:%n");
+
+            if (onibus.size() == 0) {
+                System.out.printf("  Não disponível%n");
+            } else {
+                for (int i = 0; i < onibus.size(); i++) {
+                    System.out.printf("  Ônibus %d - ", onibus.get(i).getId());
+                    if (onibus.get(i).isDisponivel()) System.out.printf("Disponível%n");
+                    else System.out.printf("Não disponível%n");
+                }
+            }
+
+            System.out.printf("%n2 - Estádio:%n");
+            if (estadio.isDisponivel()) System.out.printf("  Disponível:%n" +
+                    "    Capacidade: %d pessoas%n" +
+                    "    Número de banheiros: %d%n" +
+                    "    Número de lanchonetes: %d%n", estadio.getCapacidade(), estadio.getBanheiros(), estadio.getLanchonetes());
+            else {
+                System.out.printf("  Não disponível%n");
+            }
+
+            System.out.printf("%n3 - Centro de treinamento:%n");
+            if (centro_treinamento.isDisponivel()) System.out.printf("  Disponível:%n" +
+                    "    Número de dormitórios: %d%n", centro_treinamento.getDormitorios());
+            else {
+                System.out.printf("  Não disponível%n");
+            }
+            System.out.printf("%n0 - Cancela%n%n");
+            System.out.print("Selecione: ");
+            option = stringToInt(input.nextLine());
+
+            if (option == 1) {
+                gerenciarOnibus(onibus);
+            } else if (option == 2) {
+                gerenciarEstadio(estadio);
+            } else if (option == 3) {
+                gerenciarCT(centro_treinamento);
+            } else if(option == 0) {
+                return;
+            }
+        }
+    }
+
+    private static boolean loginPage(String admin_user, String admin_password, List<Funcionario> funcionarios, List<Socio> socios, Niveis niveis, List<Onibus> onibus, Estadio estadio, CT centro_treinamento){
         Scanner input = new Scanner(System.in);
         System.out.printf("Bem vindo ao iSoccer, gerenciador de time de futebol.%n%n");
         System.out.printf("Para entrar no sistema digite seu usuário e senha.%n");
@@ -460,7 +681,7 @@ public class Main {
             password = input.nextLine();
         }
 
-        System.out.printf("%nLogin feito com sucesso.%n%n");
+        System.out.printf("%nLogin feito com sucesso.%n");
 
         String option = "10";
 
@@ -490,7 +711,7 @@ public class Main {
             } else if (option.equals("2")) {
                 gerenciarSocios(socios, niveis);
             } else if (option.equals("3")) {
-
+                gerenciarRecursos(onibus, estadio, centro_treinamento);
             } else if (option.equals("4")) {
 
             }
@@ -543,6 +764,7 @@ public class Main {
 
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado, gerando novo arquivo de Niveis.");
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -552,7 +774,61 @@ public class Main {
         return niveis;
     }
 
-    private static void salvarDados(List<Funcionario> funcionarios, List<Socio> socios, Niveis niveis) {
+    private static Estadio carregarEstadio(Estadio estadio) {
+        try {
+            FileInputStream fis = new FileInputStream("estadio.ser");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            estadio = (Estadio) ois.readObject();
+            ois.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo não encontrado, gerando novo arquivo de Estádio.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return estadio;
+    }
+
+    private static CT carregarCT(CT centro_treinamento) {
+        try {
+            FileInputStream fis = new FileInputStream("ct.ser");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            centro_treinamento = (CT) ois.readObject();
+            ois.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo não encontrado, gerando novo arquivo de Centro de treinamento.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return centro_treinamento;
+    }
+
+    private static List<Onibus> carregarOnibus(List<Onibus> onibus){
+        try {
+            FileInputStream fis = new FileInputStream("onibus.ser");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            onibus = (List<Onibus>) ois.readObject();
+            ois.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo não encontrado, gerando novo arquivo de ônibus.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return onibus;
+    }
+
+    private static void salvarDados(List<Funcionario> funcionarios, List<Socio> socios, Niveis niveis, Estadio estadio, CT centro_treinamento, List<Onibus> onibus) {
         try {
             FileOutputStream fos = new FileOutputStream("funcionarios.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -591,20 +867,62 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            FileOutputStream fos = new FileOutputStream("onibus.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(onibus);
+            oos.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream("ct.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(centro_treinamento);
+            oos.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream("estadio.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(estadio);
+            oos.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
         List<Funcionario> funcionarios = carregarFuncionarios(new ArrayList<>());
         List<Socio> socios = carregarSocios(new ArrayList<>());
         Niveis niveis = carregarNiveis(new Niveis(100, 200));
+        List<Onibus> onibus = carregarOnibus(new ArrayList<>());
+        Estadio estadio = carregarEstadio(new Estadio(false, 0, 0, 0));
+        CT centro_treinamento = carregarCT(new CT(false, 0));
 
         String user = "admin";
         String password = "123";
 
-        boolean exit = loginPage(user, password, funcionarios, socios, niveis);
+        boolean exit = loginPage(user, password, funcionarios, socios, niveis, onibus, estadio, centro_treinamento);
 
         while(exit){
-            exit = loginPage(user, password, funcionarios, socios, niveis);
+            exit = loginPage(user, password, funcionarios, socios, niveis, onibus, estadio, centro_treinamento);
         }
 
         for(int i = 0; i < funcionarios.size(); i++){
@@ -616,6 +934,6 @@ public class Main {
             }
         }
 
-        salvarDados(funcionarios, socios, niveis);
+        salvarDados(funcionarios, socios, niveis, estadio, centro_treinamento, onibus);
     }
 }
