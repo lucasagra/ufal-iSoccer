@@ -1,3 +1,5 @@
+package funcionarios;
+
 import java.io.Serializable;
 
 public class PrepFisico extends Funcionario implements Serializable {

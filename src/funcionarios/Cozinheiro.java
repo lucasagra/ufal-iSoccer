@@ -1,3 +1,5 @@
+package funcionarios;
+
 import java.io.Serializable;
 
 public class Cozinheiro extends Funcionario implements Serializable {

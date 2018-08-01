@@ -1,3 +1,8 @@
+import funcionarios.*;
+import recursos.CT;
+import recursos.Estadio;
+import recursos.Onibus;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +14,6 @@ public class Main {
         for(int i = 0; i < funcionarios.size(); i++){
             if(cpf.equals(funcionarios.get(i).getCpf())) return true;
         }
-
         return false;
     }
 
@@ -309,7 +313,6 @@ public class Main {
         for(int i = 0; i < socios.size(); i++){
             if(cpf.equals(socios.get(i).getCpf())) return true;
         }
-
         return false;
     }
 
@@ -344,7 +347,6 @@ public class Main {
     private static int stringToInt(String string){
         try {
             int i = Integer.parseInt(string.trim());
-
             return i;
         }
         catch (NumberFormatException nfe)

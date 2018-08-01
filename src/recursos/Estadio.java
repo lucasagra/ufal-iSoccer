@@ -1,3 +1,5 @@
+package recursos;
+
 import java.io.Serializable;
 
 public class Estadio implements Serializable {
