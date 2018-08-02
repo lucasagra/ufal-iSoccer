@@ -1,3 +1,5 @@
+package socios;
+
 import java.io.Serializable;
 
 public class Socio implements Serializable {

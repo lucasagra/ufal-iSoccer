@@ -2,6 +2,8 @@ import funcionarios.*;
 import recursos.CT;
 import recursos.Estadio;
 import recursos.Onibus;
+import socios.Niveis;
+import socios.Socio;
 
 import java.util.List;
 import java.util.Scanner;

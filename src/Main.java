@@ -2,13 +2,12 @@ import funcionarios.*;
 import recursos.CT;
 import recursos.Estadio;
 import recursos.Onibus;
+import socios.Niveis;
+import socios.Socio;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
-import static java.awt.SystemColor.menu;
 
 public class Main {
 
