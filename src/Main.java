@@ -1,9 +1,6 @@
 import funcionarios.*;
-import recursos.CT;
-import recursos.Estadio;
-import recursos.Onibus;
-import socios.Niveis;
-import socios.Socio;
+import recursos.*;
+import socios.*;
 
 import java.io.*;
 import java.util.ArrayList;
