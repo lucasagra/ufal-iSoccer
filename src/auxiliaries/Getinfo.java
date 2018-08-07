@@ -9,6 +9,16 @@ public class Getinfo {
     private Scanner input = new Scanner(System.in);
     private Control control = new Control();
 
+    public String inputAdminUser(){
+        System.out.print("User: ");
+        return input.nextLine();
+    }
+
+    public String inputAdminPassword(){
+        System.out.print("Password: ");
+        return input.nextLine();
+    }
+
     public String inputUserName(){
         System.out.print("Full name: ");
         return input.nextLine();

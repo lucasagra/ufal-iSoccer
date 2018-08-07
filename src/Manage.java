@@ -13,8 +13,7 @@ class Manage {
     Manage(){}
 
     void partners(List<Partner> partners, Ranks ranks) {
-        Scanner input = new Scanner(System.in);
-
+        Control control = new Control();
         int option = -1;
 
         while(option != 0) {
@@ -24,8 +23,7 @@ class Manage {
                     "%n3 - Set new Partner-Ranks limits" +
                     "%n0 - Cancel%n");
             try {
-                System.out.print("Select: ");
-                option = new Control().stringToInt(input.nextLine());
+                option = control.inputSelect();
 
                 switch (option) {
                     case 0:
@@ -47,15 +45,12 @@ class Manage {
                         throw new InputMismatchException();
                 }
             } catch (InputMismatchException e){
-                System.out.printf("%nSorry, that option doesn't exists. Try again");
-                input.nextLine();
+                control.invalidInput();
             }
         }
     }
 
     void employees(List<Employee> employees){
-        Scanner input = new Scanner(System.in);
-
         Employee.newEmployee(employees);
     }
 
@@ -71,8 +66,7 @@ class Manage {
                     "3 - Training Center%n" +
                     "0 - Cancel%n%n");
             try {
-                System.out.print("Select: ");
-                option = control.stringToInt(input.nextLine());
+                option = control.inputSelect();
 
                 switch (option) {
                     case 0:
@@ -90,8 +84,7 @@ class Manage {
                         throw new InputMismatchException();
                 }
             } catch (InputMismatchException e){
-                System.out.printf("%nSorry, that option doesn't exists. Try again");
-                input.nextLine();
+                control.invalidInput();
             }
         }
     }
@@ -110,8 +103,7 @@ class Manage {
                     "4 - General report%n" +
                     "0 - Cancel%n%n");
             try {
-                System.out.print("Select: ");
-                option = control.stringToInt(input.nextLine());
+                option = control.inputSelect();
 
                 switch (option) {
                     case 0:
@@ -132,8 +124,7 @@ class Manage {
                         throw new InputMismatchException();
                 }
             } catch (InputMismatchException e) {
-                System.out.printf("%nSorry, that option doesn't exists. Try again");
-                input.nextLine();
+                control.invalidInput();
             }
         }
     }
