@@ -1,190 +1,138 @@
-import funcionarios.*;
-import recursos.*;
-import socios.*;
+import employees.*;
+import resources.*;
+import partners.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    private static List<Funcionario> carregarFuncionarios(List<Funcionario> funcionarios){
+    private static List<Employee> loadEmployees(List<Employee> employees){
         try {
-            FileInputStream fis = new FileInputStream("funcionarios.ser");
+            FileInputStream fis = new FileInputStream("employees.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            funcionarios = (List<Funcionario>) ois.readObject();
+            employees = (List<Employee>) ois.readObject();
             ois.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado, gerando novo arquivo de funcionarios.");
+            System.out.println("File doesn't found, creating a new employees file.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.getCause();
             e.printStackTrace();
         }
 
-        return funcionarios;
+        return employees;
     }
 
-    private static List<Socio> carregarSocios(List<Socio> socios){
+    private static List<Resources> loadResources(List<Resources> resources){
         try {
-            FileInputStream fis = new FileInputStream("socios.ser");
+            FileInputStream fis = new FileInputStream("resources.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            socios = (List<Socio>) ois.readObject();
+            resources = (List<Resources>) ois.readObject();
             ois.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado, gerando novo arquivo de sócios.");
+            System.out.println("File doesn't found, creating a new resources file.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.getCause();
             e.printStackTrace();
         }
 
-        return socios;
+        return resources;
     }
 
-    private static Niveis carregarNiveis(Niveis niveis) {
+    private static List<Partner> loadPartners(List<Partner> partners){
         try {
-            FileInputStream fis = new FileInputStream("niveis.ser");
+            FileInputStream fis = new FileInputStream("partners.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            niveis = (Niveis) ois.readObject();
+            partners = (List<Partner>) ois.readObject();
             ois.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado, gerando novo arquivo de Niveis.");
-
+            System.out.println("File doesn't found, creating a new partners file.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.getCause();
             e.printStackTrace();
         }
 
-        return niveis;
+        return partners;
     }
 
-    private static Estadio carregarEstadio(Estadio estadio) {
+    private static Ranks loadRanks(Ranks ranks) {
         try {
-            FileInputStream fis = new FileInputStream("estadio.ser");
+            FileInputStream fis = new FileInputStream("ranks.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            estadio = (Estadio) ois.readObject();
+            ranks = (Ranks) ois.readObject();
             ois.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado, gerando novo arquivo de Estádio.");
+            System.out.println("File doesn't found, creating a new rank file.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.getCause();
             e.printStackTrace();
         }
 
-        return estadio;
+        return ranks;
     }
 
-    private static CT carregarCT(CT centro_treinamento) {
+    private static void saveData(List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resources> resources) {
         try {
-            FileInputStream fis = new FileInputStream("ct.ser");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            centro_treinamento = (CT) ois.readObject();
-            ois.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado, gerando novo arquivo de Centro de treinamento.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return centro_treinamento;
-    }
-
-    private static List<Onibus> carregarOnibus(List<Onibus> onibus){
-        try {
-            FileInputStream fis = new FileInputStream("onibus.ser");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            onibus = (List<Onibus>) ois.readObject();
-            ois.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado, gerando novo arquivo de ônibus.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return onibus;
-    }
-
-    private static void salvarDados(List<Funcionario> funcionarios, List<Socio> socios, Niveis niveis, Estadio estadio, CT centro_treinamento, List<Onibus> onibus) {
-        try {
-            FileOutputStream fos = new FileOutputStream("funcionarios.ser");
+            FileOutputStream fos = new FileOutputStream("employees.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(funcionarios);
+            oos.writeObject(employees);
             oos.close();
 
         } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            FileOutputStream fos = new FileOutputStream("socios.ser");
+            FileOutputStream fos = new FileOutputStream("partners.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(socios);
+            oos.writeObject(partners);
             oos.close();
 
         } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            FileOutputStream fos = new FileOutputStream("niveis.ser");
+            FileOutputStream fos = new FileOutputStream("ranks.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(niveis);
+            oos.writeObject(ranks);
             oos.close();
 
         } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            FileOutputStream fos = new FileOutputStream("onibus.ser");
+            FileOutputStream fos = new FileOutputStream("resources.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(onibus);
+            oos.writeObject(resources);
             oos.close();
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            FileOutputStream fos = new FileOutputStream("ct.ser");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(centro_treinamento);
-            oos.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            FileOutputStream fos = new FileOutputStream("estadio.ser");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(estadio);
-            oos.close();
-
-        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -192,22 +140,19 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        List<Funcionario> funcionarios = carregarFuncionarios(new ArrayList<>());
-        List<Socio> socios = carregarSocios(new ArrayList<>());
-        Niveis niveis = carregarNiveis(new Niveis(100, 200));
-        List<Onibus> onibus = carregarOnibus(new ArrayList<>());
-        Estadio estadio = carregarEstadio(new Estadio(false, 0, 0, 0));
-        CT centro_treinamento = carregarCT(new CT(false, 0));
+        List<Employee> employees = loadEmployees(new ArrayList<>());
+        List<Partner> partners = loadPartners(new ArrayList<>());
+        List<Resources> resources = loadResources(new ArrayList<>());
+        Ranks ranks = loadRanks(new Ranks(100, 200));
 
-        String user = "admin";
-        String password = "123";
+        Menu menu = new Menu("admin", "123");
 
-        boolean continua = Menu.loginPage(user, password, funcionarios, socios, niveis, onibus, estadio, centro_treinamento);
+        boolean exit = menu.loginPage(employees, partners, ranks, resources);
 
-        while(continua){
-            continua = Menu.loginPage(user, password, funcionarios, socios, niveis, onibus, estadio, centro_treinamento);
+        while(!exit){
+            exit = menu.loginPage(employees, partners, ranks, resources);
         }
 
-        salvarDados(funcionarios, socios, niveis, estadio, centro_treinamento, onibus);
+        saveData(employees, partners, ranks, resources);
     }
 }
