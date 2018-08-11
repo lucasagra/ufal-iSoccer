@@ -1,9 +1,9 @@
-import employees.*;
-import resources.*;
-import partners.*;
+import controller.Login;
+import models.employees.*;
+import models.resources.*;
+import models.partners.*;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class Main {
             ois.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("File doesn't found, creating a new employees file.");
+            System.out.println("File doesn't found, creating a new models.employees file.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -28,15 +28,15 @@ public class Main {
         return employees;
     }
 
-    private static List<Resources> loadResources(List<Resources> resources){
+    private static List<Resource> loadResources(List<Resource> resources){
         try {
             FileInputStream fis = new FileInputStream("resources.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            resources = (List<Resources>) ois.readObject();
+            resources = (List<Resource>) ois.readObject();
             ois.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("File doesn't found, creating a new resources file.");
+            System.out.println("File doesn't found, creating a new models.resources file.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -55,7 +55,7 @@ public class Main {
             ois.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("File doesn't found, creating a new partners file.");
+            System.out.println("File doesn't found, creating a new models.partners file.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -85,7 +85,7 @@ public class Main {
         return ranks;
     }
 
-    private static void saveData(List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resources> resources) {
+    private static void saveData(List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resource> resources) {
         try {
             FileOutputStream fos = new FileOutputStream("employees.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -142,15 +142,15 @@ public class Main {
     public static void main(String[] args) {
         List<Employee> employees = loadEmployees(new ArrayList<>());
         List<Partner> partners = loadPartners(new ArrayList<>());
-        List<Resources> resources = loadResources(new ArrayList<>());
+        List<Resource> resources = loadResources(new ArrayList<>());
         Ranks ranks = loadRanks(new Ranks(100, 200));
 
-        Menu menu = new Menu("admin", "123");
+        Login login = new Login("admin", "123");
 
-        boolean exit = menu.loginPage(employees, partners, ranks, resources);
+        boolean exit = login.loginPage(employees, partners, ranks, resources);
 
         while(!exit){
-            exit = menu.loginPage(employees, partners, ranks, resources);
+            exit = login.loginPage(employees, partners, ranks, resources);
         }
 
         saveData(employees, partners, ranks, resources);
