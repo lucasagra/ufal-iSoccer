@@ -1,5 +1,6 @@
 package admin;
 
+import controller.Control;
 import utils.Format;
 import models.employees.*;
 import models.partners.*;
@@ -143,9 +144,9 @@ class Reports {
 
     private void printTransportInformation(List<Resource> resources){
         System.out.printf("%nTransports:%n");
-        Format format = new Format();
+        Control control = new Control();
 
-        List<Bus> buses = format.getBusesList(resources);
+        List<Bus> buses = control.getBusesList(resources);
         if(buses.size() <= 0){
             System.out.printf("No data available%n%n");
         } else {
@@ -159,9 +160,9 @@ class Reports {
     }
 
     private void printTrainingCenterInformation(List<Resource> resources){
-        Format format = new Format();
+        Control control = new Control();
 
-        TrainingCenter training_center = format.getTrainingCenter(resources);
+        TrainingCenter training_center = control.getTrainingCenter(resources);
 
         System.out.printf("%nTraining center information:%n");
         if(training_center == null){
@@ -172,9 +173,8 @@ class Reports {
     }
 
     private void printStadiumInformation(List<Resource> resources){
-        Format format = new Format();
-
-        Stadium stadium = format.getStadium(resources);
+        Control control = new Control();
+        Stadium stadium = control.getStadium(resources);
 
         System.out.printf("%nStadium information:%n");
         if(stadium == null){

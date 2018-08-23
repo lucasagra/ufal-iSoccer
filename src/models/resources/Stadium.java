@@ -1,5 +1,6 @@
 package models.resources;
 
+import controller.Control;
 import utils.Format;
 
 import java.io.Serializable;
@@ -45,8 +46,9 @@ public class Stadium extends Resource implements Serializable {
     public static void manage(List<Resource> resources) {
         Scanner input = new Scanner(System.in);
         Format format = new Format();
+        Control control = new Control();
 
-        int stadium_index = format.stadiumIndex(resources);
+        int stadium_index = control.stadiumIndex(resources);
 
         if(stadium_index < 0){
             System.out.printf("%nStadium unavailable%n%n" +

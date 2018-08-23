@@ -1,5 +1,6 @@
 package models.resources;
 
+import controller.Control;
 import utils.Format;
 
 import java.io.Serializable;
@@ -28,8 +29,9 @@ public class Bus extends Resource implements Serializable {
     public static void manage(List<Resource> resources) {
         Scanner input = new Scanner(System.in);
         Format format = new Format();
+        Control control = new Control();
 
-        List<Integer> bus_indexes = format.busIndexes(resources);
+        List<Integer> bus_indexes = control.busIndexes(resources);
 
         System.out.printf("1 - Add bus%n");
         for(int i = 0; i < bus_indexes.size(); i++) {

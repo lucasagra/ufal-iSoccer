@@ -3,6 +3,7 @@ package admin;
 import java.util.InputMismatchException;
 import java.util.List;
 
+import data.Data;
 import models.employees.Employee;
 import models.partners.*;
 import models.resources.Resource;
@@ -20,7 +21,7 @@ public class Admin {
         this.password = password;
     }
 
-    public boolean authenticate(List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resource> resources){
+    public boolean authenticate(Data data, List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resource> resources){
         Getinfo info = new Getinfo();
         String user = info.inputAdminUser();
         if (user.equals("0")){
@@ -40,11 +41,11 @@ public class Admin {
             password = info.inputAdminPassword();
         }
 
-        authenticated(employees, partners, ranks, resources);
+        authenticated(data, employees, partners, ranks, resources);
         return false;
     }
 
-    private void authenticated(List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resource> resources){
+    private void authenticated(Data data, List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resource> resources){
         Menu menu = new Menu();
         Manage manage = new Manage();
         Format format = new Format();

@@ -25,7 +25,6 @@ public class Getinfo {
     }
 
     public String inputUserCpf(){
-
         System.out.print("Cpf: ");
         return input.nextLine();
     }
@@ -84,5 +83,20 @@ public class Getinfo {
         }
 
         return contribution;
+    }
+
+    public int getEmployeeType() {
+        System.out.printf("%nWhat kind of employee is him?%n" +
+                "%n1 - President" +
+                "%n2 - Doctor" +
+                "%n3 - Coach" +
+                "%n4 - Personal Trainer" +
+                "%n5 - Driver" +
+                "%n6 - Cook" +
+                "%n7 - Lawyer" +
+                "%n8 - Player" +
+                "%n0 - Cancel%n%n");
+
+        return new Format().inputSelect();
     }
 }

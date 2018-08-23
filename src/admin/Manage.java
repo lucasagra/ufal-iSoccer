@@ -1,5 +1,6 @@
 package admin;
 
+import controller.Control;
 import utils.Format;
 import models.employees.*;
 import models.partners.*;
@@ -48,7 +49,8 @@ class Manage {
     }
 
     void employees(List<Employee> employees){
-        Employee.newEmployee(employees);
+        Control control = new Control();
+        control.newEmployee(employees);
     }
 
     void resources(List<Resource> resources){

@@ -15,4 +15,6 @@ public class EmployeesData
     public List<Lawyer> lawyers = new ArrayList<>();
     public List<Personal> personals = new ArrayList<>();
     public List<Player> players = new ArrayList<>();
+
+
 }

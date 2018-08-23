@@ -1,4 +1,5 @@
 package models.partners;
+import controller.Control;
 import utils.*;
 import java.io.Serializable;
 import java.util.List;
@@ -68,7 +69,7 @@ public class Partner implements Serializable {
         String name = info.inputUserName();
         String cpf = info.inputUserCpf();
 
-        if(new Format().partnerCpfInUse(partners, cpf)) {
+        if(new Control().partnerCpfInUse(partners, cpf)) {
             System.out.println("This CPF is already in use.");
             format.operationAborted();
             return null;

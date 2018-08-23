@@ -1,5 +1,6 @@
 package models.resources;
 
+import controller.Control;
 import utils.Format;
 
 import java.io.Serializable;
@@ -25,8 +26,9 @@ public class TrainingCenter extends Resource implements Serializable {
     public static void manage(List<Resource> resources) {
         Scanner input = new Scanner(System.in);
         Format format = new Format();
+        Control control = new Control();
 
-        int trainingcenter_index = format.trainingCenterIndex(resources);
+        int trainingcenter_index = control.trainingCenterIndex(resources);
 
         if(trainingcenter_index < 0){
             System.out.printf("%nTraining center unavailable.%n%n" +
