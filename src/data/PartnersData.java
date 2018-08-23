@@ -5,5 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartnersData {
-    public List<Partner> partners = new ArrayList<>();
+    private List<Partner> partners = new ArrayList<>();
+
+    public List<Partner> getPartnersData() {
+        return this.partners;
+    }
+
+    public void addPartner(Partner partner) {
+        this.partners.add(partner);
+    }
 }
