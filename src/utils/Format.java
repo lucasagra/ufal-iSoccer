@@ -1,11 +1,4 @@
 package utils;
-
-import models.employees.Employee;
-import models.partners.Partner;
-import models.resources.*;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Format {
@@ -32,9 +25,7 @@ public class Format {
         try {
             int i = Integer.parseInt(string.trim());
             return i;
-        }
-        catch (NumberFormatException nfe)
-        {
+        } catch (NumberFormatException nfe) {
             return -1;
         }
     }
