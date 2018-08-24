@@ -1,7 +1,6 @@
 package admin;
 
 import controller.Control;
-import utils.Format;
 import models.employees.*;
 import models.partners.*;
 import models.resources.*;
@@ -208,7 +207,7 @@ class Reports {
         System.out.printf("%d Partners on time%n" +
                 "%d Partners overdue%n%n", on_time, partners.size() - on_time);
 
-        System.out.printf("%nOn time models.partners:%n");
+        System.out.printf("%nOn time partners:%n");
         int j = 0;
         for(Partner partner: partners){
             if(partner.getSituation()){
@@ -221,7 +220,7 @@ class Reports {
         }
 
         j = 0;
-        System.out.printf("%nOverdue models.partners:%n");
+        System.out.printf("%nOverdue partners:%n");
         for(Partner partner: partners){
             if(!partner.getSituation()){
                 partner.getInfo();
@@ -229,7 +228,7 @@ class Reports {
             }
         }
         if(j == 0){
-            System.out.printf("There is no Overdue models.partners%n%n");
+            System.out.printf("There is no Overdue partners%n%n");
         }
     }
 

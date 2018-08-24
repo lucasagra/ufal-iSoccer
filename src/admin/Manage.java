@@ -1,6 +1,7 @@
 package admin;
 
 import controller.Control;
+import data.Data;
 import utils.Format;
 import models.employees.*;
 import models.partners.*;
@@ -50,12 +51,15 @@ class Manage {
 
     void employees(List<Employee> employees){
         Control control = new Control();
+
         control.newEmployee(employees);
+
     }
 
     void resources(List<Resource> resources){
         Format format = new Format();
         Menu menu = new Menu();
+        Control control = new Control();
 
         int option = -1;
         while (option != 0) {
@@ -65,13 +69,13 @@ class Manage {
                     case 0:
                         break;
                     case 1:
-                        Bus.manage(resources);
+                        control.manageBuses(resources);
                         break;
                     case 2:
-                        Stadium.manage(resources);
+                        control.manageStadium(resources);
                         break;
                     case 3:
-                        TrainingCenter.manage(resources);
+                        control.manageTrainingCenter(resources);
                         break;
                     default:
                         throw new InputMismatchException();
@@ -82,7 +86,7 @@ class Manage {
         }
     }
 
-    void reports(List<Employee> employees, List<Partner> partners, List<Resource> resources){
+    void reports(Data data){
         Menu menu = new Menu();
         Format format = new Format();
         Reports reports = new Reports();
@@ -96,16 +100,16 @@ class Manage {
                     case 0:
                         break;
                     case 1:
-                        reports.employees(employees);
+                        reports.employees(data.getEmployeesData());
                         break;
                     case 2:
-                        reports.resources(resources);
+                        reports.resources(data.getResourcesData());
                         break;
                     case 3:
-                        reports.partners(partners);
+                        reports.partners(data.getPartnersData());
                         break;
                     case 4:
-                        reports.general(employees, resources, partners);
+                        reports.general(data.getEmployeesData(), data.getResourcesData(), data.getPartnersData());
                         break;
                     default:
                         throw new InputMismatchException();

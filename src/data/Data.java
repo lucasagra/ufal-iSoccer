@@ -1,49 +1,56 @@
 package data;
 
+import models.employees.Employee;
+import models.partners.Partner;
 import models.partners.Ranks;
+import models.resources.Resource;
 
-public class Data {
-    private EmployeesData employees;
-    private PartnersData partners;
-    private ResourcesData resources;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Data implements Serializable {
+    private List<Employee> employees;
+    private List<Partner> partners;
+    private List<Resource> resources;
     private Ranks ranks;
 
-    public Data(EmployeesData employees, PartnersData partners, ResourcesData resources){
-        this.employees = employees;
-        this.partners = partners;
-        this.resources = resources;
+    public Data(){
+        this.employees = new ArrayList<>();
+        this.partners = new ArrayList<>();
+        this.resources = new ArrayList<>();
         this.ranks = new Ranks(100, 200);
     }
 
-    public EmployeesData getEmployeesData() {
-        return this.employees;
+    public List<Employee> getEmployeesData() {
+        return employees;
     }
 
-    public PartnersData getPartnersData(){
-        return this.partners;
+    public List<Partner> getPartnersData() {
+        return partners;
     }
 
-    public ResourcesData getResourcesData() {
-        return this.resources;
+    public List<Resource> getResourcesData() {
+        return resources;
     }
 
     public Ranks getRanksData() {
-        return this.ranks;
+        return ranks;
     }
 
-    public void setEmployeesData(EmployeesData employees) {
-        this.employees = employees;
+    public void addEmployee(Employee employee) {
+        this.employees.add(employee);
     }
 
-    public void setPartnersData(PartnersData partners) {
-        this.partners = partners;
+    public void addPartner(Partner partner) {
+        this.partners.add(partner);
+    }
+
+    public void addResource(Resource resource) {
+        this.resources.add(resource);
     }
 
     public void setRanksData(Ranks ranks) {
         this.ranks = ranks;
-    }
-
-    public void setResourcesData(ResourcesData resources) {
-        this.resources = resources;
     }
 }

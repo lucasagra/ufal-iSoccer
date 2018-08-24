@@ -8,7 +8,6 @@ public class Menu {
 
     public Menu() {}
 
-
     public int main(){
         System.out.printf("%n1 - Add employee" +
                 "%n2 - Manage supporters" +
@@ -40,9 +39,11 @@ public class Menu {
     public int partners(){
         System.out.printf("Actions available:" +
                 "%n1 - Add partner" +
-                "%n2 - models.Manage models.partners" +
+                "%n2 - Manage partners" +
                 "%n3 - Set new Partner-Ranks limits" +
                 "%n0 - Cancel%n");
         return format.inputSelect();
     }
+
+
 }

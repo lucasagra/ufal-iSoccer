@@ -2,11 +2,6 @@ package controller;
 
 import admin.Admin;
 import data.Data;
-import models.employees.*;
-import models.resources.*;
-import models.partners.*;
-
-import java.util.List;
 
 public class Login {
     private String user;
@@ -17,13 +12,13 @@ public class Login {
         this.password = password;
     }
 
-    public boolean loginPage(Data data, List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resource> resources){
+    public boolean loginPage(Data data){
         Admin admin = new Admin(this.user, this.password);
 
         System.out.printf("Welcome to iSoccer, football manager.%n%n");
         System.out.printf("Type your account and password to login.%n");
         System.out.printf("0 - Exit%n");
 
-        return admin.authenticate(data, employees, partners, ranks, resources);
+        return admin.authenticate(data);
     }
 }

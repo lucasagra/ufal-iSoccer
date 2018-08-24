@@ -15,7 +15,7 @@ public class Resource implements Serializable {
         return available;
     }
 
-    void setAvailable(boolean available) {
+    public void setAvailable(boolean available) {
         Scanner input = new Scanner(System.in);
 
         this.available = available;

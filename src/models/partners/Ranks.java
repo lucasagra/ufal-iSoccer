@@ -56,11 +56,10 @@ public class Ranks implements Serializable {
             ranks.setLevels(senior, elite);
             System.out.println("Ranks successfully updated.");
             recalculateLevels(partners, ranks);
-            System.out.println("Partners ranks has been recalculated.");
+            System.out.println("Partners ranks have been recalculated.");
             input.nextLine();
         } else {
-            System.out.println("Invalid input.");
-            input.nextLine();
+            format.invalidInput();
         }
     }
 }

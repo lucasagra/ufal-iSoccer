@@ -1,12 +1,8 @@
 package admin;
 
 import java.util.InputMismatchException;
-import java.util.List;
 
 import data.Data;
-import models.employees.Employee;
-import models.partners.*;
-import models.resources.Resource;
 import utils.Format;
 import utils.Getinfo;
 import views.Menu;
@@ -21,7 +17,7 @@ public class Admin {
         this.password = password;
     }
 
-    public boolean authenticate(Data data, List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resource> resources){
+    public boolean authenticate(Data data){
         Getinfo info = new Getinfo();
         String user = info.inputAdminUser();
         if (user.equals("0")){
@@ -41,11 +37,11 @@ public class Admin {
             password = info.inputAdminPassword();
         }
 
-        authenticated(data, employees, partners, ranks, resources);
+        authenticated(data);
         return false;
     }
 
-    private void authenticated(Data data, List<Employee> employees, List<Partner> partners, Ranks ranks, List<Resource> resources){
+    private void authenticated(Data data){
         Menu menu = new Menu();
         Manage manage = new Manage();
         Format format = new Format();
@@ -61,16 +57,16 @@ public class Admin {
                     case 0:
                         break;
                     case 1:
-                        manage.employees(employees);
+                        manage.employees(data.getEmployeesData());
                         break;
                     case 2:
-                        manage.partners(partners, ranks);
+                        manage.partners(data.getPartnersData(), data.getRanksData());
                         break;
                     case 3:
-                        manage.resources(resources);
+                        manage.resources(data.getResourcesData());
                         break;
                     case 4:
-                        manage.reports(employees, partners, resources);
+                        manage.reports(data);
                         break;
                     default:
                         throw new InputMismatchException();

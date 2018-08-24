@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Control {
-    public boolean employeeCpfInUse(List<Employee> employees, String cpf){
+    private boolean employeeCpfInUse(List<Employee> employees, String cpf){
         for(Employee employee: employees){
             if(cpf.equals(employee.getCpf())) return true;
         }
@@ -30,6 +30,7 @@ public class Control {
 
         return false;
     }
+
 
     public List<Bus> getBusesList(List<Resource> resources){
         List<Bus> buses = new ArrayList<>();
@@ -63,7 +64,7 @@ public class Control {
         return null;
     }
 
-    public int stadiumIndex(List<Resource> resources){
+    private int stadiumIndex(List<Resource> resources){
 
         for(int index = 0; index < resources.size(); index++){
             if(resources.get(index) instanceof Stadium)  {
@@ -74,7 +75,7 @@ public class Control {
         return -1;
     }
 
-    public int trainingCenterIndex(List<Resource> resources){
+    private int trainingCenterIndex(List<Resource> resources){
 
         for(int index = 0; index < resources.size(); index++){
             if(resources.get(index) instanceof TrainingCenter)  {
@@ -85,7 +86,7 @@ public class Control {
         return -1;
     }
 
-    public List<Integer> busIndexes(List<Resource> resources) {
+    private List<Integer> busIndexes(List<Resource> resources) {
         List<Integer> indexes = new ArrayList<>();
 
         for(int i = 0; i < resources.size(); i++){
@@ -96,6 +97,187 @@ public class Control {
 
         return indexes;
     }
+
+    public void manageBuses(List<Resource> resources) {
+        Scanner input = new Scanner(System.in);
+        Format format = new Format();
+        Control control = new Control();
+
+        List<Integer> bus_indexes = control.busIndexes(resources);
+
+        System.out.printf("1 - Add bus%n");
+        for(int i = 0; i < bus_indexes.size(); i++) {
+            if(resources.get(bus_indexes.get(i)) instanceof Bus) {
+                System.out.printf("%d - Bus id: %d - %d seats - ", i + 2, ((Bus) resources.get(bus_indexes.get(i))).getId(), ((Bus) resources.get(bus_indexes.get(i))).getSeatsNumber());
+                if (resources.get(bus_indexes.get(i)).isAvailable()) System.out.printf("Available%n");
+                else System.out.printf("Unavailable%n");
+            }
+        }
+
+        int option = format.inputSelect();
+
+        if(option == 1) {
+            System.out.print("Seats: ");
+            int seats = format.stringToInt(input.nextLine());
+            if (seats > 0) {
+                resources.add(new Bus(resources.size()+1, seats, true));
+                System.out.printf("%nBus successfully added.%n%n");
+                input.nextLine();
+            }
+        } else if (option-2 >= 0 && option-2 < bus_indexes.size()) {
+            option = bus_indexes.get(option-2);
+            System.out.printf("%nSelected: Bus %d%n", ((Bus)resources.get(option)).getId());
+            System.out.printf("Change bus situation:%n" +
+                    "1 - Available%n" +
+                    "2 - Unavailable%n");
+
+            int choice = format.inputSelect();
+
+            switch (choice){
+                case 1:
+                    resources.get(option).setAvailable(true);
+                    break;
+                case 2:
+                    resources.get(option).setAvailable(false);
+                    break;
+                default:
+                    format.operationAborted();
+                    break;
+            }
+        }
+    }
+
+    public void manageStadium(List<Resource> resources) {
+        Scanner input = new Scanner(System.in);
+        Format format = new Format();
+        Control control = new Control();
+        Getinfo info = new Getinfo();
+
+        int stadium_index = control.stadiumIndex(resources);
+
+        if(stadium_index < 0){
+            System.out.printf("%nStadium unavailable%n%n" +
+                    "1 - Add stadium%n" +
+                    "0 - Cancel%n%n");
+
+            int option = format.inputSelect();
+
+            if(option == 1) {
+                int capacity = info.getStadiumCapacity();
+                int restrooms = info.getRestroomsNumber();
+                int fastfoods = info.getFastfoodsNumber();
+                resources.add(new Stadium(true, capacity, restrooms, fastfoods));
+
+                System.out.printf("%nStadium successfully added.%n%n");
+            }
+        } else {
+            System.out.printf("%nStadium information" +
+                    "%n1 - Change capacity" +
+                    "%n2 - Change restrooms number" +
+                    "%n3 - Change fastfoods number" +
+                    "%n4 - Remove stadium" +
+                    "%n0 - Cancel%n%n");
+
+            int option = format.inputSelect();
+
+            switch (option){
+                case 1:
+                    int capacity = info.getStadiumCapacity();
+                    ((Stadium) resources.get(stadium_index)).setCapacity(capacity);
+                    System.out.printf("%nCapacity successfully changed.%n%n");
+                    input.nextLine();
+                    break;
+                case 2:
+                    int restrooms = info.getRestroomsNumber();
+                    ((Stadium) resources.get(stadium_index)).setRestrooms(restrooms);
+                    System.out.printf("%nRestrooms number successfully changed.%n%n");
+                    input.nextLine();
+                    break;
+                case 3:
+                    int fastfoods = info.getFastfoodsNumber();
+                    ((Stadium) resources.get(stadium_index)).setFastfoods(fastfoods);
+                    System.out.printf("%nFastfoods number successfully changed.%n%n");
+                    input.nextLine();
+                    break;
+                case 4:
+                    System.out.printf("Do you want to remove the stadium?%n" +
+                            "1 - Yes%n" +
+                            "0 - Cancel%n");
+
+                    option = format.inputSelect();
+
+                    if(option == 1){
+                        resources.remove(stadium_index);
+                        System.out.printf("%nStadium successfully removed.%n%n");
+                        input.nextLine();
+                    } else {
+                        format.operationAborted();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void manageTrainingCenter(List<Resource> resources) {
+        Scanner input = new Scanner(System.in);
+        Format format = new Format();
+        Control control = new Control();
+        Getinfo info = new Getinfo();
+
+        int trainingcenter_index = control.trainingCenterIndex(resources);
+
+        if(trainingcenter_index < 0){
+            System.out.printf("%nTraining center unavailable.%n%n" +
+                    "1 - Add training center%n" +
+                    "0 - Cancel%n%n");
+
+            int option = format.inputSelect();
+
+            if(option == 1) {
+                int dorms = info.getDormsNumber();
+                resources.add(new TrainingCenter(true, dorms));
+                System.out.printf("%nTraining center successfully added.%n%n");
+                input.nextLine();
+            }
+        } else {
+            System.out.printf("%nTraining center information:" +
+                    "%n1 - Change dorms number" +
+                    "%n2 - Remove training center" +
+                    "%n0 - Cancel%n%n");
+
+            int option = format.inputSelect();
+
+            switch (option){
+                case 1:
+                    int dorms = info.getDormsNumber();
+                    ((TrainingCenter) resources.get(trainingcenter_index)).setDorms(dorms);
+                    System.out.printf("%nDorms number successfully changed.%n%n");
+                    input.nextLine();
+                    break;
+                case 2:
+                    System.out.printf("Do you want to remove the training center?%n" +
+                            "1 - Yes%n" +
+                            "0 - Cancel%n" +
+                            "");
+
+                    option = format.inputSelect();
+
+                    if(option == 1){
+                        resources.remove(trainingcenter_index);
+                        System.out.printf("%nTraining center successfully removed.%n%n");
+                        input.nextLine();
+                    } else {
+                        format.operationAborted();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 
     private President presidentFactory(String name, String email, int salary, String cpf, String phone){
         return new President(name, email, salary, cpf, phone);
